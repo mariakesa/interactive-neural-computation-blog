@@ -3,13 +3,17 @@
 	import data from '/data/neuropixel_probe_locs.json';
 
 	let chart;
+	let imageSvg;
+	let imageElement;
 
 	onMount(async () => {
 		const d3 = await import('d3');
 
 		// Set up the SVG container for the scatter plot
-		const width = 500;
+		const width = 800;
 		const height = 500;
+		const imageWidth = 600; // Fixed width for the image
+		const imageHeight = 400; // Fixed height for the image
 
 		const svg = d3.select(chart).append('svg').attr('width', width).attr('height', height);
 
@@ -17,7 +21,7 @@
 		const xScale = d3
 			.scaleLinear()
 			.domain([-d3.max(data, (d) => d.x), d3.max(data, (d) => d.x)])
-			.range([0, width]);
+			.range([0, width - imageWidth]); // Reduce the width to fit the scatter plot
 
 		const yScale = d3
 			.scaleLinear()
@@ -44,22 +48,23 @@
 		});
 
 		// Set up the SVG container for the image
-		const imageWidth = 300; // Set the desired width for the image
-		const imageHeight = 200; // Set the desired height for the image
-
-		const imageSvg = d3
+		imageSvg = d3
 			.select(chart)
 			.append('svg')
 			.attr('width', imageWidth)
-			.attr('height', imageHeight);
+			.attr('height', imageHeight)
+			.style('position', 'absolute')
+			.style('left', `${width - imageWidth}px`) // Position the image container to the right
+			.style('top', `${height / 2 - imageHeight / 2}px`) // Center the image vertically with respect to the scatter plot
+			.attr('class', 'image-container'); // Apply the image-container class to the SVG
 
-		// Append the image element
-		const imageElement = imageSvg
+		// Append the image element to the container
+		imageElement = imageSvg
 			.append('image')
 			.attr('x', 0)
 			.attr('y', 0)
-			.attr('width', imageWidth)
-			.attr('height', imageHeight);
+			.attr('width', '150%') // Set the image width to 100% to resize the image
+			.attr('height', '150%'); // Set the image height to 100% to resize the image
 
 		// Function to update the image
 		const updateImage = (src) => {
@@ -72,4 +77,10 @@
 
 <style>
 	/* Your custom styles for the scatter plot and image container can go here */
+
+	/* Optional: You can add styles for the image container to remove pointer events and borders */
+	.image-container {
+		pointer-events: none;
+		border: 1px solid #ccc;
+	}
 </style>
