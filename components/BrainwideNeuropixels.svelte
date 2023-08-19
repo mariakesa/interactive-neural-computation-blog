@@ -10,8 +10,8 @@
 		const d3 = await import('d3');
 
 		// Set up the SVG container for the scatter plot
-		const width = 800;
-		const height = 500;
+		const width = 1000;
+		const height = 600;
 		const imageWidth = 600; // Fixed width for the image
 		const imageHeight = 400; // Fixed height for the image
 
@@ -37,7 +37,8 @@
 			.attr('cx', (d) => xScale(d.x))
 			.attr('cy', (d) => yScale(d.y))
 			.attr('r', 3.5)
-			.attr('fill', '#34ebb7');
+			.attr('fill', '#34ebb7')
+			.attr('opacity', 0.5);
 
 		// Event listener for hover over circles
 		circles.on('mouseover', async (event, d) => {
@@ -54,8 +55,8 @@
 			.attr('width', imageWidth)
 			.attr('height', imageHeight)
 			.style('position', 'absolute')
-			.style('left', `${width - imageWidth}px`) // Position the image container to the right
-			.style('top', `${height / 2 - imageHeight / 2}px`) // Center the image vertically with respect to the scatter plot
+			.style('left', `${width - imageWidth}`) // Position the image container to the right
+			.style('top', `${height / 2 - imageHeight / 6}`) // Center the image vertically with respect to the scatter plot
 			.attr('class', 'image-container'); // Apply the image-container class to the SVG
 
 		// Append the image element to the container
@@ -63,8 +64,8 @@
 			.append('image')
 			.attr('x', 0)
 			.attr('y', 0)
-			.attr('width', '150%') // Set the image width to 100% to resize the image
-			.attr('height', '150%'); // Set the image height to 100% to resize the image
+			.attr('width', '80%') // Set the image width to 100% to resize the image
+			.attr('height', '80%'); // Set the image height to 100% to resize the image
 
 		// Function to update the image
 		const updateImage = (src) => {
@@ -81,6 +82,6 @@
 	/* Optional: You can add styles for the image container to remove pointer events and borders */
 	.image-container {
 		pointer-events: none;
-		border: 1px solid #ccc;
+		border: 1px solid rgb(41, 22, 147);
 	}
 </style>
