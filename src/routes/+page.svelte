@@ -1,5 +1,6 @@
 <script>
 	import BrainwideNeuropixelsSvelte from '../../components/BrainwideNeuropixelsSvelteScatter.svelte';
+	import Linearity from '../../components/Linearity.svelte';
 </script>
 
 <h1>SystemsAndNeurons</h1>
@@ -10,3 +11,4 @@
 <p>Python code:</p>
 <p>Svelte component:</p>
 <BrainwideNeuropixelsSvelte />
+<Linearity />

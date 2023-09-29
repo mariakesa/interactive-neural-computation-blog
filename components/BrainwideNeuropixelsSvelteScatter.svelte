@@ -1,15 +1,15 @@
 <script>
 	import data from '/data/neuropixel_probe_locs.json';
-	console.log(data);
+	//console.log(data);
 	import { scaleLinear } from 'd3-scale';
-	import * as d3 from 'd3';
+	import { max, min } from 'd3-array';
 
 	let xScale = scaleLinear()
-		.domain([d3.min(data, (d) => d.x), d3.max(data, (d) => d.x)]) //Input
+		.domain([min(data, (d) => d.x), max(data, (d) => d.x)]) //Input
 		.range([0, 100]); //Output
 
 	let yScale = scaleLinear()
-		.domain([d3.min(data, (d) => d.y), d3.max(data, (d) => d.y)]) //Input
+		.domain([min(data, (d) => d.y), max(data, (d) => d.y)]) //Input
 		.range([0, 100]);
 </script>
 
