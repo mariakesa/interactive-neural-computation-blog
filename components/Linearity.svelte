@@ -3,47 +3,52 @@
 
 <script>
     import * as d3 from 'd3';
-    import { onMount, afterUpdate } from 'svelte';
+    import { onMount } from 'svelte';
   
-    let data = [10, 20, 30, 40, 50];
-    let svg; // Reference to the SVG element
+    // Define the vectors
+    const vector1 = { x: 30, y: 40 };
+    const vector2 = { x: -20, y: -60 };
   
     function createChart() {
-      // Select the chart container and create an SVG element
-      svg = d3.select('.chart-container').append('svg');
+      // Create an SVG container
+      const svg = d3.select('.chart-container').append('svg')
+        .attr('width', 400)
+        .attr('height', 400);
   
-      // Create and update the chart when data changes
-      updateChart();
-    }
+      // Create the coordinate grid lines
+      svg.append('line')
+        .attr('x1', 0)
+        .attr('y1', 200)
+        .attr('x2', 400)
+        .attr('y2', 200)
+        .attr('stroke', 'gray');
   
-    // Function to update the chart based on the data
-    function updateChart() {
-      const rects = svg.selectAll('rect').data(data);
+      svg.append('line')
+        .attr('x1', 200)
+        .attr('y1', 0)
+        .attr('x2', 200)
+        .attr('y2', 400)
+        .attr('stroke', 'gray');
   
-      // Enter
-      rects.enter()
-        .append('rect')
-        .attr('x', (d, i) => i * 40)
-        .attr('y', (d) => 100 - d)
-        .attr('width', 30)
-        .attr('height', (d) => d);
+      // Create vector1
+      svg.append('line')
+        .attr('x1', 200)
+        .attr('y1', 200)
+        .attr('x2', 200 + vector1.x)
+        .attr('y2', 200 - vector1.y)
+        .attr('stroke', 'blue');
   
-      // Update
-      rects
-        .attr('x', (d, i) => i * 40)
-        .attr('y', (d) => 100 - d)
-        .attr('width', 30)
-        .attr('height', (d) => d);
-  
-      // Exit
-      rects.exit().remove();
+      // Create vector2
+      svg.append('line')
+        .attr('x1', 200)
+        .attr('y1', 200)
+        .attr('x2', 200 + vector2.x)
+        .attr('y2', 200 - vector2.y)
+        .attr('stroke', 'red');
     }
   
     // Call the chart creation function when the component is mounted
     onMount(createChart);
-  
-    // Update the chart when the data changes
-    afterUpdate(updateChart);
   </script>
   
   <style>
@@ -53,4 +58,3 @@
   <div class="chart-container">
     <!-- Your chart will be rendered here -->
   </div>
-  
